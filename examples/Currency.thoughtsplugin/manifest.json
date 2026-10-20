@@ -1,16 +1,24 @@
 {
   "id": "com.alxeu.currency",
   "name": "Currency",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "apiVersion": 1,
   "author": "Thoughts",
-  "description": "Currency conversion with daily ECB rates: 100 usd in eur.",
+  "description": "Currency conversion like Spotlight: 100 usd in eur, 100 usd vnd, 100usd (to your currency), $100. Rates by ExchangeRate-API (open.er-api.com).",
   "homepage": "https://github.com/alxxeu/thoughts-plugins",
   "main": "main.js",
-  "permissions": { "network": ["api.frankfurter.app"] },
+  "permissions": {
+    "network": [
+      "open.er-api.com"
+    ]
+  },
   "contributes": {
     "converters": [
-      { "id": "currency", "name": "Currency", "description": "100 usd in eur, 50 eur to gbp" }
+      {
+        "id": "currency",
+        "name": "Currency",
+        "description": "100 usd in eur, 100 usd vnd, 100usd, $100"
+      }
     ]
   }
 }

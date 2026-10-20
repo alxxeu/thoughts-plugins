@@ -80,13 +80,30 @@ thoughts.converter("math", {
 })
 
 // --- Units --------------------------------------------------------------------
+// "5 ft in cm", "5ft to cm", "10ft cm" and just "5ft" — then, like Spotlight, the
+// result goes to the usual unit of the other system (ft → cm in metric countries,
+// cm → in in the US).
 
 var units = {
   length: { mm: 0.001, cm: 0.01, m: 1, km: 1000, in: 0.0254, inch: 0.0254, inches: 0.0254, ft: 0.3048, foot: 0.3048, feet: 0.3048, yd: 0.9144, mi: 1609.344, mile: 1609.344, miles: 1609.344 },
   weight: { mg: 0.001, g: 1, kg: 1000, t: 1e6, oz: 28.349523125, lb: 453.59237, lbs: 453.59237 },
-  volume: { ml: 0.001, l: 1, cl: 0.01, dl: 0.1, tsp: 0.00492892, tbsp: 0.0147868, cup: 0.236588, cups: 0.236588, pt: 0.473176, qt: 0.946353, gal: 3.78541 },
+  volume: { ml: 0.001, l: 1, cl: 0.01, dl: 0.1, tsp: 0.00492892, tbsp: 0.0147868, cup: 0.236588, cups: 0.236588, pt: 0.473176, qt: 0.946353, gal: 3.78541, floz: 0.0295735 },
   data: { b: 1, kb: 1e3, mb: 1e6, gb: 1e9, tb: 1e12, kib: 1024, mib: 1048576, gib: 1073741824 }
 }
+
+// Default target when only the source is typed.
+var toMetric = { in: "cm", inch: "cm", inches: "cm", ft: "cm", foot: "cm", feet: "cm", yd: "m", mi: "km", mile: "km", miles: "km",
+                 oz: "g", lb: "kg", lbs: "kg", floz: "ml", cup: "ml", cups: "ml", pt: "l", qt: "l", gal: "l", f: "c" }
+var toImperial = { mm: "in", cm: "in", m: "ft", km: "mi", g: "oz", kg: "lb", ml: "floz", l: "gal", c: "f" }
+
+function defaultTarget(from) {
+  var metric = !thoughts.locale || thoughts.locale.usesMetricSystem !== false
+  // Metric countries: imperial → metric first, metric → imperial otherwise (5 kg → lb).
+  return metric ? (toMetric[from] || toImperial[from] || null) : (toImperial[from] || toMetric[from] || null)
+}
+
+function unitName(u) { return u === "floz" ? "fl oz" : u }
+function norm(u) { return u.toLowerCase().replace("°", "").replace("fl oz", "floz") }
 
 function toCelsius(value, unit) {
   if (unit === "c") return value
@@ -99,20 +116,27 @@ function fromCelsius(value, unit) {
   if (unit === "k") return value + 273.15
 }
 
+function convertUnits(value, from, to) {
+  if (/^[cfk]$/.test(from) && /^[cfk]$/.test(to) && from !== to) {
+    return format(fromCelsius(toCelsius(value, from), to)) + " °" + to.toUpperCase()
+  }
+  for (var kind in units) {
+    var table = units[kind]
+    if (table[from] && table[to] && from !== to) return format(value * table[from] / table[to]) + " " + unitName(to)
+  }
+  return null
+}
+
 thoughts.converter("units", {
   convert(line) {
-    var m = /^(-?\d+(?:[.,]\d+)?)\s*([a-z°]+)\s+(?:in|to|=)\s+([a-z°]+)$/i.exec(line)
+    // number, unit, then optionally ["in" | "to" | "="] unit
+    var m = /^(-?\d+(?:[.,]\d+)?)\s*(°?[a-z]+(?: oz)?)(?:\s+(?:(?:in|to|=)\s+)?(°?[a-z]+(?: oz)?))?$/i.exec(line)
     if (!m) return null
     var value = parseFloat(m[1].replace(",", "."))
-    var from = m[2].toLowerCase().replace("°", ""), to = m[3].toLowerCase().replace("°", "")
-
-    if (/^[cfk]$/.test(from) && /^[cfk]$/.test(to)) {
-      return format(fromCelsius(toCelsius(value, from), to)) + " °" + to.toUpperCase()
-    }
-    for (var kind in units) {
-      var table = units[kind]
-      if (table[from] && table[to]) return format(value * table[from] / table[to]) + " " + m[3]
-    }
-    return null
+    var from = norm(m[2])
+    // A bare "5 c" (cups? °C?) or "5k" (thousand?) is too ambiguous without a target or °.
+    var to = m[3] ? norm(m[3]) : (/^[ck]$/.test(from) && !m[2].startsWith("°") ? null : defaultTarget(from))
+    if (!to) return null
+    return convertUnits(value, from, to)
   }
 })

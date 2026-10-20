@@ -62,8 +62,11 @@ thoughts.converter("currency", {
 |---|---|
 | `thoughts.converter(id, { convert(line) })` | Registers a converter. `id` must be listed in `contributes.converters`. |
 | `thoughts.fetch(url, { method, headers, body })` | `https` only, only hosts from `permissions.network`. Resolves to `{ status, ok, text(), json() }`. 5 s timeout, 1 MB max. |
+| `thoughts.locale` | `{ identifier, language, region, currency, usesMetricSystem }` of the user, e.g. to convert `100usd` to their own currency or `5ft` to cm in metric countries. |
 | `thoughts.storage.get(key)` / `.set(key, value)` | Small JSON storage for this plugin (for example a cache of rates). |
 | `console.log(...)` | Goes to Console.app (subsystem `com.alxeu.Thoughts.plugins`). |
+
+Accept short input, like Spotlight does: `5ft` (no target — pick the usual one from `thoughts.locale`), `10ft cm` and `100 usd vnd` (no `in`/`to`), `$100`.
 
 Rules that keep typing fast:
 - Answer within **300 ms** (3 s if the plugin uses the network). A converter that misses the deadline three times in a row gets the plugin turned off.
@@ -76,7 +79,7 @@ Settings → Plugins → **Install Plugin…** and pick the folder, or drag it o
 
 **App Store version.** The App Store version of Thoughts installs plugins with a script only when they are signed with the Thoughts catalog key (App Store rules for plugins). The direct-download version and a build run from Xcode install any plugin — use them to test. Signing: `swift scripts/sign-plugin.swift Name.thoughtsplugin <keyfile>` — catalog maintainers only.
 
-Examples: [`Calculator`](examples/Calculator.thoughtsplugin) (math and units, offline), [`Currency`](examples/Currency.thoughtsplugin) (network, cache in storage).
+Examples: [`Calculator`](examples/Calculator.thoughtsplugin) (math and units, offline: `12*3`, `5ft`, `10ft cm`, `70f`), [`Currency`](examples/Currency.thoughtsplugin) (network, cache in storage: `100usd`, `100 usd vnd`, `$100 to eur`).
 
 ## 5. Also available: templates and appearance
 
