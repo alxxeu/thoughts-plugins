@@ -74,7 +74,7 @@ Rules that keep typing fast:
 
 Settings → Plugins → **Install Plugin…** and pick the folder, or drag it onto the Plugins list. Problems are shown under the plugin's name in red, for example a converter listed in the manifest that the script didn't register. To try a change: edit the installed copy (**Open Plugins Folder**) and press **Reload Plugins**, or raise `version` and install again.
 
-**App Store version.** The App Store version of Thoughts installs plugins with a script only when they are signed with the Thoughts catalog key (App Store rules for plugins). The direct-download version installs any plugin. Signing: `swift scripts/sign-plugin.swift Name.thoughtsplugin <keyfile>` — catalog maintainers only.
+**App Store version.** The App Store version of Thoughts installs plugins with a script only when they are signed with the Thoughts catalog key (App Store rules for plugins). The direct-download version and a build run from Xcode install any plugin — use them to test. Signing: `swift scripts/sign-plugin.swift Name.thoughtsplugin <keyfile>` — catalog maintainers only.
 
 Examples: [`Calculator`](examples/Calculator.thoughtsplugin) (math and units, offline), [`Currency`](examples/Currency.thoughtsplugin) (network, cache in storage).
 
