@@ -1,0 +1,48 @@
+{
+  "id": "com.alxeu.midnight",
+  "name": "Midnight",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "Thoughts",
+  "description": "A calm night palette: moonlight text, fine dots and two card templates.",
+  "homepage": "https://github.com/alxxeu/thoughts-plugins",
+  "contributes": {
+    "textColors": [
+      { "id": "moonlight", "name": "Moonlight", "hex": "#C8D3FF" },
+      { "id": "starlight", "name": "Starlight", "hex": "#FFF4D6" }
+    ],
+    "patterns": [
+      { "id": "fine-dots", "name": "Fine Dots", "kind": "dots", "spacing": 16, "dotSize": 1.5 },
+      { "id": "wide-grid", "name": "Wide Grid", "kind": "grid", "spacing": 48, "lineWidth": 0.5 }
+    ],
+    "themes": [
+      {
+        "id": "midnight",
+        "name": "Midnight",
+        "font": "builtin.serif",
+        "textColor": "com.alxeu.midnight/moonlight",
+        "pattern": "com.alxeu.midnight/fine-dots",
+        "patternIntensity": 0.15
+      }
+    ],
+    "cardTemplates": [
+      {
+        "id": "standup",
+        "name": "Daily Standup",
+        "note": "yesterday, today, blockers",
+        "text": "## Yesterday\n- \n\n## Today\n- \n\n## Blockers\n- ",
+        "size": { "columns": 4, "rows": 5 },
+        "tag": "blue"
+      },
+      {
+        "id": "week",
+        "name": "Week Board",
+        "menuTitle": "New Week Board",
+        "variants": [
+          { "name": "Work Week", "note": "Mon–Fri", "text": "::: board\n## Mon\n- \n||\n## Tue\n||\n## Wed\n||\n## Thu\n||\n## Fri", "size": { "columns": 16, "rows": 6 } },
+          { "name": "Full Week", "note": "Mon–Sun", "text": "::: board\n## Mon\n- \n||\n## Tue\n||\n## Wed\n||\n## Thu\n||\n## Fri\n||\n## Sat\n||\n## Sun", "size": { "columns": 22, "rows": 6 } }
+        ]
+      }
+    ]
+  }
+}

@@ -2,8 +2,13 @@
 
 Plugins and templates for [Thoughts](https://github.com/alxxeu/Thoughts), a Mac app for scattered ideas.
 
-- [docs/plugins.md](docs/plugins.md) — the plugin system design: package format, extension points, security model, distribution.
+A plugin is a `.thoughtsplugin` folder with a `manifest.json`: fonts, text colors, canvas patterns, themes and card templates. Plugins are data only and never run code.
 
-This repository will also hold the community catalog (`index.json` and the plugin packs) once the in-app Browse tab exists. See section 7 of the design document.
+- **[Create a plugin](CREATE.md)** — the format, step by step.
+- **[Example](examples/Midnight.thoughtsplugin/manifest.json)** — colors, patterns, a theme and card templates.
+- **[For AI agents](AGENTS.md)** — how to generate a plugin that installs on the first try.
+- **[Design](docs/plugins.md)** — the full design, including what comes next.
 
-Status: design draft. Feedback is welcome in issues.
+Install: Thoughts → Settings → Plugins → Install Plugin…, or drag the folder onto the Plugins list.
+
+This repository will also hold the community catalog once the in-app Browse tab exists.

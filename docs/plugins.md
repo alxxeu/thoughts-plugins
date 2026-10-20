@@ -1,10 +1,10 @@
 # Thoughts Plugins — Design
 
-Status: **draft / design only.** Nothing in this document is implemented yet
-except the built-in customization registry that the plugin system will extend
-(see [Runtime architecture](#5-runtime-architecture)). This document is the
-contract we intend to ship, published early so the community can comment on it
-before any code lands.
+Status: **Phase 1 implemented** (Thoughts for Mac, `develop`): Tier 1 packs with
+`fonts`, `textColors`, procedural `patterns`, `themes` and `cardTemplates`;
+install, update, enable/disable and remove in Settings → Plugins. Not yet:
+`aiActions`, image patterns, double-click install, the catalog. The practical
+format guide is [CREATE.md](../CREATE.md); this document is the long-term design.
 
 ---
 
@@ -42,9 +42,9 @@ A pack is data only. It *contributes* items to one or more **extension points**:
 | `fonts` | `.ttf` / `.otf` files, registered for this process only | Settings → Appearance → Font |
 | `textColors` | Named card text colors | Settings → Appearance → Text Color |
 | `patterns` | Canvas background patterns: procedural parameters or a tiled image | Settings → Appearance → Background |
-| `themes` | A named bundle of font + text color + pattern (+ intensity) | Settings → Appearance → Theme presets |
+| `themes` | A named bundle of font + text color + pattern (+ intensity) | Settings → Appearance → Theme Preset |
 | `aiActions` | Prompt templates | One-tap suggestions in the Ask AI panels (card context menu, Focus Mode, Space) |
-| `cardTemplates` | Starting text, size and tag for a new card | Quick Capture and a future "New from Template" menu |
+| `cardTemplates` | Starting text, size and tag for a new card; with `variants` — a submenu (like the built-in kanban) | Right-click on an empty spot of the board, Settings → Plugins → Templates |
 
 ### Tier 2: scripted plugins (future, exploratory)
 
@@ -126,9 +126,17 @@ Midnight.thoughtsplugin/
       {
         "id": "standup",
         "name": "Daily Standup",
-        "text": "Yesterday:\n• \n\nToday:\n• \n\nBlockers:\n• ",
+        "text": "## Yesterday\n- \n\n## Today\n- \n\n## Blockers\n- ",
         "size": { "columns": 4, "rows": 4 },
         "tag": "blue"
+      },
+      {
+        "id": "week",
+        "name": "Week Board",
+        "menuTitle": "New Week Board",
+        "variants": [
+          { "name": "Work Week", "text": "::: board\n## Mon\n- \n||\n## Tue", "size": { "columns": 16, "rows": 6 } }
+        ]
       }
     ]
   }
@@ -309,12 +317,13 @@ new network requests are to the catalog, and they never include user content.
 **Phase 0 (done):** built-in customization on a string-id registry (font, text
 color, canvas pattern) and Quick Capture.
 
-**Phase 1:** `PluginManager`, the Settings → Plugins tab, local install, the
-`fonts`, `textColors`, `patterns` and `themes` extension points, and one
-example pack.
+**Phase 1 (done):** `PluginManager` (`PluginsModel`), the Settings → Plugins
+tab, local install, the `fonts`, `textColors`, procedural `patterns`, `themes`
+and `cardTemplates` extension points, and an example pack
+(`examples/Midnight.thoughtsplugin`).
 
-**Phase 2:** the `aiActions` and `cardTemplates` extension points, and the
-`thoughts-plugins` catalog repo with CI validation.
+**Phase 2:** the `aiActions` extension point, image patterns, double-click
+install, and the `thoughts-plugins` catalog with CI validation.
 
 **Phase 3:** the in-app Browse tab.
 
