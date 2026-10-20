@@ -1,14 +1,12 @@
 # thoughts-plugins
 
-Plugins and templates for [Thoughts](https://github.com/alxxeu/Thoughts), a Mac app for scattered ideas.
+Plugins for [Thoughts](https://github.com/alxxeu/Thoughts), a Mac app for scattered ideas.
 
-A plugin is a `.thoughtsplugin` folder with a `manifest.json`: fonts, text colors, canvas patterns, themes and card templates. Plugins are data only and never run code.
+Plugins add **converters** to cards, like Spotlight: type `12*3`, `5 ft in cm` or `100 usd in eur`, see the result in gray, press Tab to insert it. A plugin is a `.thoughtsplugin` folder with `manifest.json` and a small `main.js` that runs isolated, with no access to your cards and the internet only for the sites it lists. Plugins can also add card templates, fonts and colors.
 
-- **[Create a plugin](CREATE.md)** — the format, step by step.
-- **[Example](examples/Midnight.thoughtsplugin/manifest.json)** — colors, patterns, a theme and card templates.
+- **[Create a plugin](CREATE.md)** — format and script API.
+- **Examples:** [Calculator](examples/Calculator.thoughtsplugin) · [Currency](examples/Currency.thoughtsplugin) · [Midnight](examples/Midnight.thoughtsplugin) (templates and appearance).
 - **[For AI agents](AGENTS.md)** — how to generate a plugin that installs on the first try.
-- **[Design](docs/plugins.md)** — the full design, including what comes next.
+- **[Design](docs/plugins.md)** — the long-term plan: commands, Reminders and Calendar, OAuth integrations, the catalog.
 
 Install: Thoughts → Settings → Plugins → Install Plugin…, or drag the folder onto the Plugins list.
-
-This repository will also hold the community catalog once the in-app Browse tab exists.

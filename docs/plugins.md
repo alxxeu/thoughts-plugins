@@ -1,10 +1,13 @@
 # Thoughts Plugins — Design
 
-Status: **Phase 1 implemented** (Thoughts for Mac, `develop`): Tier 1 packs with
-`fonts`, `textColors`, procedural `patterns`, `themes` and `cardTemplates`;
-install, update, enable/disable and remove in Settings → Plugins. Not yet:
-`aiActions`, image patterns, double-click install, the catalog. The practical
-format guide is [CREATE.md](../CREATE.md); this document is the long-term design.
+Status: **implemented in Thoughts for Mac (`develop`):** Tier 1 packs (`fonts`,
+`textColors`, procedural `patterns`, `themes`, `cardTemplates`) and the first piece
+of Tier 2 — **converters**: a `main.js` run in JavaScriptCore with
+`thoughts.converter`, `thoughts.fetch` (https, declared hosts), `thoughts.storage`.
+The App Store build accepts scripted plugins only with a catalog signature
+(Ed25519, `scripts/sign-plugin.swift`). Not yet: commands and card access,
+Reminders/Calendar, OAuth, `aiActions`, image patterns, the catalog. The practical
+guide is [CREATE.md](../CREATE.md); this document is the long-term design.
 
 ---
 

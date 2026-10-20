@@ -1,0 +1,16 @@
+{
+  "id": "com.alxeu.calculator",
+  "name": "Calculator",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "Thoughts",
+  "description": "Math and unit conversions right in your cards: 12*3, 15% of 80, 2^10, 5 ft in cm, 70 f to c.",
+  "homepage": "https://github.com/alxxeu/thoughts-plugins",
+  "main": "main.js",
+  "contributes": {
+    "converters": [
+      { "id": "math", "name": "Math", "description": "+ − × ÷, brackets, ^, %, sqrt" },
+      { "id": "units", "name": "Units", "description": "length, weight, volume, temperature, data" }
+    ]
+  }
+}

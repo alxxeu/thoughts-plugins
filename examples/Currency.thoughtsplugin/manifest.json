@@ -1,0 +1,16 @@
+{
+  "id": "com.alxeu.currency",
+  "name": "Currency",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "Thoughts",
+  "description": "Currency conversion with daily ECB rates: 100 usd in eur.",
+  "homepage": "https://github.com/alxxeu/thoughts-plugins",
+  "main": "main.js",
+  "permissions": { "network": ["api.frankfurter.app"] },
+  "contributes": {
+    "converters": [
+      { "id": "currency", "name": "Currency", "description": "100 usd in eur, 50 eur to gbp" }
+    ]
+  }
+}
